@@ -1,0 +1,14 @@
+[submodule "core/pericarp"]
+	path = core/pericarp
+	url = https://github.com/akeemphilbert/pericarp.git
+	branch = main
+[submodule "services/vine-iam"]
+	path = services/vine-iam
+	url = https://github.com/wepala/vine-iam.git
+	branch = main
+[submodule "services/vine-greenpeas"]
+	path = services/vine-greenpeas
+	url = https://github.com/wepala/vine-greenpeas.git
+[submodule "services/vine-pod"]
+	path = services/vine-pod
+	url = https://github.com/wepala/vine-pod.git
