@@ -17,6 +17,26 @@ be handled by a separate Identity and Access Management (IAM) service.
 * I should be able to update resources in my pod by passing in new JSON-LD data
 * I should be able to see the metadata of a resource (e.g. creation date, last modified date, size)
 
+### Content Consumer Stories
+* I should be able to browse public resources without logging in so that I can discover interesting data
+* I should be able to search for specific types of content so that I can find what I'm looking for
+* I should be able to follow links between related resources so that I can explore connected information
+* I should be able to download data in a format my tools understand so that I can use it in my own work
+
+### Collaborator Stories
+* I should be able to access folders that were shared with me so that I can see our team's work
+* I should be able to add files to shared folders so that I can contribute to the project
+* I should be able to edit shared documents when given permission so that we can work together
+* I should be notified when someone changes a shared file so that I know what's happening
+* I should be able to leave comments on resources so that I can give feedback without changing the actual data
+
+### Application Developer Stories
+* I should be able to connect my app to pods using an API so that users can access their data
+* I should be able to get notifications when data changes so that my app can stay up-to-date
+* I should be able to upload multiple files at once so that my app can work efficiently
+* I should be able to search across pod data so that my app can help users find things
+* I should be able to check what my app is allowed to do so that I don't hit any limits
+
 ### Admin Stories
 * I should be able to configure the pod to allow or disallow public access to resources
 * I should be able to set storage quotas for users
