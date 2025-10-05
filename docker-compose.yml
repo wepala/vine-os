@@ -31,7 +31,7 @@ services:
     container_name: vine-graphdb
     environment:
       GDB_HEAP_SIZE: ${GDB_HEAP_SIZE:-8g}
-      GDB_JAVA_OPTS: ${GDB_JAVA_OPTS:--Xmx2g -Xms1g}
+      GDB_JAVA_OPTS: ${GDB_JAVA_OPTS:--XX:+UseG1GC -XX:MaxGCPauseMillis=200}
     ports:
       - "${GRAPHDB_PORT:-7200}:7200"
     volumes:
