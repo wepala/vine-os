@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  # PostgreSQL database with pgvector extension
+  postgres:
+    image: pgvector/pgvector:pg16
+    container_name: vine-postgres
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-vine_main}
+      POSTGRES_USER: ${POSTGRES_USER:-vine_user}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-vine_dev_password}
+      POSTGRES_MULTIPLE_DATABASES: vine_pod,vine_iam,vine_greenpeas
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./scripts/init-postgres.sql:/docker-entrypoint-initdb.d/01-init.sql:ro
+      - ./scripts/create-multiple-databases.sh:/docker-entrypoint-initdb.d/02-create-multiple-databases.sh:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-vine_user} -d ${POSTGRES_DB:-vine_main}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    networks:
+      - vine-network
+
+  # Ontotext GraphDB for semantic/RDF data storage
+  graphdb:
+    image: ontotext/graphdb:10.6.3
+    container_name: vine-graphdb
+    environment:
+      GDB_HEAP_SIZE: ${GDB_HEAP_SIZE:-8g}
+      GDB_JAVA_OPTS: ${GDB_JAVA_OPTS:--Xmx2g -Xms1g}
+    ports:
+      - "${GRAPHDB_PORT:-7200}:7200"
+    volumes:
+      - graphdb_data:/opt/graphdb/home
+      - graphdb_work:/opt/graphdb/work
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7200/rest/info"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 60s
+    networks:
+      - vine-network
+
+volumes:
+  postgres_data:
+    name: vine_postgres_data
+  graphdb_data:
+    name: vine_graphdb_data
+  graphdb_work:
+    name: vine_graphdb_work
+
+networks:
+  vine-network:
+    name: vine-network
+    driver: bridge
