@@ -102,7 +102,7 @@ Built-in `Entity` struct provides event sourcing capabilities:
 
 ```go
 type User struct {
-    domain.Entity  // Embeds ID, version, sequenceNo, events management
+    domain.Entity  // Embeds GetID, version, sequenceNo, events management
     email    string
     name     string
 }
